@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NIKHONA – Press Kit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&family=Share+Tech+Mono&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#06060a;
+  --white:#c0bfcc;
+  --silver:#c0bfcc;
+  --silver2:#8a8899;
+  --silver3:#3a3848;
+  --glow:#d4d2e8;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+.cursor{position:fixed;width:6px;height:6px;background:var(--silver);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--glow),0 0 25px rgba(200,198,220,0.4);}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(192,191,204,0.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.14s ease;}
+
+/* SCANLINES */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9000;}
+
+/* HERO */
+.header{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--black);}
+.header-img{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;object-position:center top;opacity:0;transition:opacity 2.2s ease;will-change:transform;filter:saturate(0.6) contrast(1.1);}
+.header-img.loaded{opacity:0.55;}
+.header-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(100,98,120,0.12) 0%,transparent 50%);}
+.header-overlay2{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 15%,rgba(6,6,10,0.65) 65%,var(--black) 100%);}
+
+/* GRID */
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(192,191,204,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(192,191,204,0.025) 1px,transparent 1px);background-size:50px 50px;animation:gridMove 25s linear infinite;}
+@keyframes gridMove{0%{background-position:0 0;}100%{background-position:50px 50px;}}
+
+.scan-line{position:absolute;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,198,220,0.4),transparent);animation:scan 7s linear infinite;z-index:3;}
+@keyframes scan{0%{top:-1px;}100%{top:100%;}}
+
+/* GLITCH */
+.glitch{position:relative;display:inline-block;}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;font-family:'Cormorant Garamond',serif;font-size:inherit;font-weight:300;letter-spacing:12px;line-height:1;}
+.glitch::before{color:rgba(210,208,230,0.5);animation:glitch1 5s infinite;clip-path:polygon(0 0,100% 0,100% 30%,0 30%);}
+.glitch::after{color:rgba(140,138,160,0.4);animation:glitch2 5s infinite;clip-path:polygon(0 70%,100% 70%,100% 100%,0 100%);}
+@keyframes glitch1{0%,88%,100%{transform:translate(0);}90%{transform:translate(-3px,1px);}93%{transform:translate(3px,-1px);}96%{transform:translate(-1px,2px);}}
+@keyframes glitch2{0%,88%,100%{transform:translate(0);}90%{transform:translate(3px,-1px);}93%{transform:translate(-3px,1px);}96%{transform:translate(1px,-2px);}}
+
+.header-content{position:relative;z-index:2;padding:60px 60px 70px;}
+.header-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:6px;text-transform:uppercase;color:var(--silver2);margin-bottom:16px;opacity:0;animation:fadeUp 1s ease 0.5s forwards;}
+.header-label::before{content:'[ ';}
+.header-label::after{content:' ]';}
+.header-name{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,12vw,140px);font-weight:300;letter-spacing:12px;line-height:1;color:var(--white);opacity:0;animation:fadeUp 1.2s ease 0.8s forwards;}
+.header-tagline{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--silver2);margin-top:18px;opacity:0;animation:fadeUp 1s ease 1.2s forwards;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* FREQUENCY CANVAS */
+.freq-wrap{position:absolute;bottom:0;left:0;width:100%;height:160px;z-index:2;opacity:0.7;}
+#freqCanvas{width:100%;height:100%;display:block;}
+
+/* REIN FREQUENCY SECTION */
+.rein-section{
+  padding:60px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,var(--black),#0a0a12,var(--black));
+}
+.rein-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:linear-gradient(rgba(192,191,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(192,191,204,0.02) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.rein-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,3vw,32px);
+  font-weight:300;
+  color:var(--silver);
+  margin-bottom:8px;
+  position:relative;
+  z-index:1;
+}
+.rein-sub{
+  font-family:'Share Tech Mono',monospace;
+  font-size:10px;
+  letter-spacing:4px;
+  color:var(--silver3);
+  text-transform:uppercase;
+  margin-bottom:40px;
+  position:relative;
+  z-index:1;
+}
+.voices-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  position:relative;
+  z-index:1;
+}
+.voice-card{
+  border:1px solid var(--silver3);
+  padding:24px 20px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.4s;
+}
+.voice-card::before{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--silver),transparent);
+  transform:scaleX(0);
+  transition:transform 0.5s;
+}
+.voice-card:hover::before{transform:scaleX(1);}
+.voice-card:hover{border-color:var(--silver2);}
+.voice-num{
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;
+  color:var(--silver3);
+  letter-spacing:3px;
+  margin-bottom:12px;
+}
+.voice-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  color:var(--silver);
+  margin-bottom:8px;
+}
+.voice-desc{font-size:11px;color:var(--silver2);line-height:1.6;}
+.voice-wave{width:100%;height:40px;margin-top:16px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(50px);transition:opacity 1s ease,transform 1s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:16px;padding:0 60px;margin:40px 0;opacity:0;transition:opacity 1s ease;}
+.divider.visible{opacity:1;}
+.divider::before{content:'//';font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--silver2);opacity:0.4;}
+.divider-line{flex:1;height:1px;background:linear-gradient(90deg,var(--silver3),transparent);opacity:0.5;}
+
+/* SECTIONS */
+.section{padding:60px 60px;max-width:960px;}
+.section-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--silver2);margin-bottom:20px;opacity:0.7;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:300;color:var(--white);margin-bottom:24px;line-height:1.2;}
+.section p{font-size:14px;color:#8a8899;line-height:1.9;margin-bottom:16px;}
+.section p strong{color:var(--white);font-weight:500;}
+
+.bio-img{width:100%;max-width:460px;display:block;margin:30px 0;position:relative;}
+.bio-img img{width:100%;display:block;filter:saturate(0.5) contrast(1.1);transition:filter 0.8s;}
+.bio-img:hover img{filter:saturate(0.9) contrast(1.1);}
+.bio-img::before{content:'';position:absolute;inset:0;border:1px solid var(--silver3);z-index:1;pointer-events:none;transition:border-color 0.4s;}
+.bio-img:hover::before{border-color:var(--silver2);}
+.bio-img::after{content:'';position:absolute;top:8px;left:8px;right:-8px;bottom:-8px;border:1px solid rgba(100,98,120,0.2);z-index:0;pointer-events:none;}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--silver3);margin-top:40px;border:1px solid var(--silver3);}
+.skill-card{background:var(--black);padding:30px 24px;transition:background 0.3s;position:relative;overflow:hidden;}
+.skill-card::before{content:'';position:absolute;top:0;left:0;width:1px;height:0;background:var(--silver);transition:height 0.4s ease;}
+.skill-card:hover::before{height:100%;}
+.skill-card:hover{background:#0c0c14;}
+.skill-card .skill-icon{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--silver2);margin-bottom:12px;opacity:0.6;}
+.skill-card h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--white);margin-bottom:8px;}
+.skill-card p{font-size:12px;color:#5a5868;line-height:1.6;margin:0;}
+
+.genre-list{margin-top:30px;display:flex;flex-direction:column;gap:2px;}
+.genre-item{display:flex;align-items:center;gap:20px;padding:20px 24px;border-left:2px solid transparent;transition:all 0.3s;position:relative;overflow:hidden;}
+.genre-item::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(192,191,204,0.03),transparent);opacity:0;transition:opacity 0.3s;}
+.genre-item:hover::before{opacity:1;}
+.genre-item:hover{transform:translateX(8px);}
+.genre-item.primary{border-left-color:var(--silver);}
+.genre-item.secondary{border-left-color:var(--silver3);}
+.genre-item.tertiary{border-left-color:#222;}
+.genre-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--white);min-width:160px;}
+.genre-desc{font-size:12px;color:#5a5868;line-height:1.6;}
+.genre-badge{margin-left:auto;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--silver2);white-space:nowrap;opacity:0.6;}
+
+.perf-list{margin-top:30px;display:flex;flex-direction:column;}
+.perf-item{display:flex;align-items:center;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.03);gap:20px;transition:all 0.3s;}
+.perf-item:hover{transform:translateX(10px);border-bottom-color:rgba(192,191,204,0.15);}
+.perf-dot{width:5px;height:5px;border-radius:50%;background:var(--silver);flex-shrink:0;box-shadow:0 0 6px var(--silver);}
+.perf-country{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);min-width:130px;}
+.perf-detail{font-family:'Share Tech Mono',monospace;font-size:11px;color:#3a3848;}
+.perf-note{margin-top:20px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#252530;letter-spacing:1px;}
+
+.music-card{margin-top:30px;display:flex;gap:30px;align-items:flex-start;padding:30px;border:1px solid var(--silver3);background:#08080f;position:relative;overflow:hidden;transition:border-color 0.4s;}
+.music-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(100,98,120,0.06),transparent 60%);animation:pulse 5s ease infinite;}
+@keyframes pulse{0%,100%{opacity:0.5;}50%{opacity:1;}}
+.music-card:hover{border-color:var(--silver2);}
+.music-cover{width:120px;height:120px;object-fit:cover;flex-shrink:0;filter:saturate(0.4) contrast(1.1);transition:filter 0.5s,box-shadow 0.4s;position:relative;z-index:1;}
+.music-card:hover .music-cover{filter:saturate(1) contrast(1.05);box-shadow:0 0 30px rgba(192,191,204,0.15);}
+.music-info{position:relative;z-index:1;}
+.music-info h3{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--white);line-height:1;margin-bottom:6px;}
+.music-info .artist-line{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--silver2);margin-bottom:16px;opacity:0.7;}
+.music-info p{font-size:12px;color:#5a5868;line-height:1.7;margin-bottom:12px;}
+.music-link{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--silver);border:1px solid var(--silver3);padding:10px 20px;text-decoration:none;transition:all 0.3s;position:relative;overflow:hidden;}
+.music-link::before{content:'';position:absolute;inset:0;background:rgba(192,191,204,0.04);transform:translateX(-100%);transition:transform 0.3s;}
+.music-link:hover::before{transform:translateX(0);}
+.music-link:hover{color:var(--white);border-color:var(--silver);box-shadow:0 0 20px rgba(192,191,204,0.1);}
+
+.contact-section{padding:60px;border-top:1px solid var(--silver3);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:30px;position:relative;}
+.contact-section::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1px;background:linear-gradient(90deg,var(--silver2),transparent);opacity:0.3;}
+.contact-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--silver2);margin-bottom:16px;opacity:0.6;}
+.contact-left h2{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--white);margin-bottom:24px;}
+.contact-item{margin-bottom:14px;}
+.contact-item .c-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#3a3848;margin-bottom:4px;}
+.contact-item a,.contact-item span{font-size:14px;color:var(--white);text-decoration:none;}
+.contact-item a{transition:color 0.3s;}
+.contact-item a:hover{color:var(--silver);}
+.contact-right .big-name{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,8vw,80px);font-weight:300;letter-spacing:10px;color:rgba(192,191,204,0.03);line-height:1;}
+.footer{padding:20px 60px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer span{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:#1e1e28;text-transform:uppercase;}
+
+/* PARTICLES */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.particle{position:absolute;width:1px;height:1px;background:var(--silver);border-radius:50%;opacity:0;animation:floatUp linear infinite;box-shadow:0 0 3px var(--silver);}
+@keyframes floatUp{0%{transform:translateY(100vh);opacity:0;}10%{opacity:0.4;}90%{opacity:0.1;}100%{transform:translateY(-10px);opacity:0;}}
+
+@media(max-width:600px){
+  .header-content,.section,.divider,.contact-section,.footer,.rein-section{padding-left:24px;padding-right:24px;}
+  .music-card{flex-direction:column;}
+  .music-cover{width:100%;height:200px;}
+  .voices-grid{grid-template-columns:1fr;}
+  .genre-item{flex-wrap:wrap;}
+  .genre-badge{margin-left:0;margin-top:4px;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="particles" id="particles"></div>
+
+<!-- HERO -->
+<div class="header">
+  <img class="header-img" id="heroImg" src="https://res.cloudinary.com/doocwvxvz/image/upload/f_auto,q_auto/v1776052720/2_brabz9.png" alt="NIKHONA"/>
+  <div class="grid-lines"></div>
+  <div class="header-overlay"></div>
+  <div class="header-overlay2"></div>
+  <div class="scan-line"></div>
+  <div class="freq-wrap"><canvas id="freqCanvas"></canvas></div>
+  <div class="header-content">
+    <div class="header-label">Artist Press Kit 2025</div>
+    <div class="header-name"><span class="glitch" data-text="NIKHONA">NIKHONA</span></div>
+    <div class="header-tagline">DJ &nbsp;·&nbsp; Producer &nbsp;·&nbsp; Vocalist &nbsp;·&nbsp; AI Music Architect</div>
+  </div>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- BIO -->
+<div class="section reveal">
+  <div class="section-label">// About</div>
+  <div class="section-title">She didn't wait for the industry.<br/>She built her own entry point.</div>
+  <p>NIKHONA is a South African DJ, producer, vocalist and songwriter currently cutting through the global Amapiano and Afro House circuit with a story that defies the conventional path into music.</p>
+  <p>Her journey began in modelling and as a vocalist but the industry kept the door closed. Rather than wait, she turned to the tools she knew best. Drawing on years working inside tech and AI startups, she began architecting her own sound by feeding her voice, her writing style and her musical instincts into a production process entirely her own. The result was <strong>Rein</strong>, her AI collaborator. Rein has no face. She is frequency. She exists as three distinct voices, each one emerging differently depending on the song.</p>
+  <div class="bio-img">
+    <img src="https://res.cloudinary.com/doocwvxvz/image/upload/v1776057154/IMG_1605_a6giwl.jpg" alt="NIKHONA"/>
+  </div>
+  <p>For a year, NIKHONA tested music quietly on real people with no credits and no context, just listening for feeling. Then she flew to Turkey to formally train as a DJ. Then she hit the road. Armed with original music, a laptop and a DJ setup, she began performing across South America and Southeast Asia, trading sets for stays, building a live presence city by city, country by country.</p>
+  <p>Ten months into her DJ career, NIKHONA has performed internationally across multiple continents, released her debut single <strong>Mono ft. Rein</strong> written, produced and performed by her, and is currently co-producing new material with a Johannesburg-based producer with an established presence in the South African electronic music scene.</p>
+  <p>She is not waiting to be discovered. She is already in motion.</p>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- REIN FREQUENCY -->
+<div class="rein-section reveal">
+  <div class="section-label">// Rein · AI Collaborator</div>
+  <div class="rein-title">She has no face. She is frequency.</div>
+  <div class="rein-sub">Three voices · One signal · No origin</div>
+  <div class="voices-grid">
+    <div class="voice-card">
+      <div class="voice-num">Voice 01 //</div>
+      <div class="voice-name">The Witness</div>
+      <div class="voice-desc">Cold, observational. Appears when the song needs distance. She watches. She does not feel.</div>
+      <canvas class="voice-wave" id="wave1"></canvas>
+    </div>
+    <div class="voice-card">
+      <div class="voice-num">Voice 02 //</div>
+      <div class="voice-name">The Current</div>
+      <div class="voice-desc">Warm, beneath everything. The undercurrent you feel before you hear. She moves the room.</div>
+      <canvas class="voice-wave" id="wave2"></canvas>
+    </div>
+    <div class="voice-card">
+      <div class="voice-num">Voice 03 //</div>
+      <div class="voice-name">The Signal</div>
+      <div class="voice-desc">Fragmented, glitching. Arrives between the spaces. She is what the song cannot say out loud.</div>
+      <canvas class="voice-wave" id="wave3"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- PROFILE -->
+<div class="section reveal">
+  <div class="section-label">// Artist Profile</div>
+  <div class="section-title">DJ. Producer. One artist.</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">01 //</div>
+      <h4>DJ Performance</h4>
+      <p>Live sets rooted in Amapiano and Afro House. Performed across Turkey, Paraguay, Argentina, Thailand, Vietnam and beyond within her first 10 months.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">02 //</div>
+      <h4>Original Production</h4>
+      <p>Self-developed AI music production methodology. Writes, produces and voices her own music. Debut single released. Second track in production with a Johannesburg-based producer.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">03 //</div>
+      <h4>Vocalist and Songwriter</h4>
+      <p>Trained vocalist with a background in music from high school. Writes all her own lyrics. Her voice features on original releases alongside AI collaborator Rein.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">04 //</div>
+      <h4>Visual Identity</h4>
+      <p>Former model with a strong understanding of visual branding. Brings a fully formed artistic world not just a sound, but an aesthetic and a story.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- SOUND -->
+<div class="section reveal">
+  <div class="section-label">// Sound</div>
+  <div class="section-title">Rooted in Amapiano.<br/>Fluent in the diaspora.</div>
+  <p>NIKHONA's core sound is Amapiano, the South African genre built on log drums, piano melodies and deep groove. Her sets are grounded here first. Her second home is Afro House, specifically the 3 Steps subgenre, a textured, percussive strain of South African Afro House that sits between the dancefloor and something more spiritual. Gqom forms part of her extended toolkit, giving her range across the full South African electronic spectrum.</p>
+  <div class="genre-list">
+    <div class="genre-item primary">
+      <div class="genre-name">Amapiano</div>
+      <div class="genre-desc">Core genre. Log drum-driven, piano-led South African sound. Her primary identity as a DJ and producer.</div>
+      <div class="genre-badge">Primary</div>
+    </div>
+    <div class="genre-item secondary">
+      <div class="genre-name">Afro House</div>
+      <div class="genre-desc">3 Steps subgenre. Deep, percussive South African Afro House. Her secondary performance and production focus.</div>
+      <div class="genre-badge">Secondary</div>
+    </div>
+    <div class="genre-item tertiary">
+      <div class="genre-name">Gqom</div>
+      <div class="genre-desc">Hard-hitting South African electronic. Extended range and toolkit.</div>
+      <div class="genre-badge">Extended</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- PERFORMANCES -->
+<div class="section reveal">
+  <div class="section-label">// Performance History</div>
+  <div class="section-title">10 months.<br/>4 continents.</div>
+  <p>Within her first year as a performing DJ, NIKHONA has built a live footprint across Europe, the Middle East, South America and Southeast Asia, performing at venues, events and cultural spaces in the following countries:</p>
+  <div class="perf-list">
+    <div class="perf-item"><div class="perf-dot"></div><div class="perf-country">Turkey</div><div class="perf-detail">DJ training base and early live performances · Europe / Middle East</div></div>
+    <div class="perf-item"><div class="perf-dot"></div><div class="perf-country">Paraguay</div><div class="perf-detail">Live performances · South America</div></div>
+    <div class="perf-item"><div class="perf-dot"></div><div class="perf-country">Argentina</div><div class="perf-detail">Live performances · South America</div></div>
+    <div class="perf-item"><div class="perf-dot"></div><div class="perf-country">Thailand</div><div class="perf-detail">Live performances · Southeast Asia</div></div>
+    <div class="perf-item"><div class="perf-dot"></div><div class="perf-country">Vietnam</div><div class="perf-detail">Live performances · Southeast Asia · Current base</div></div>
+  </div>
+  <p class="perf-note">* Full event documentation and performance posters available upon request.</p>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- MUSIC -->
+<div class="section reveal">
+  <div class="section-label">// Discography</div>
+  <div class="section-title">Original music.<br/>Her voice. Her world.</div>
+  <div class="music-card">
+    <img class="music-cover" src="https://res.cloudinary.com/doocwvxvz/image/upload/f_auto,q_auto/v1776052758/3_a4fth8.png" alt="Mono Cover"/>
+    <div class="music-info">
+      <div class="artist-line">NIKHONA ft. Rein</div>
+      <h3>mono</h3>
+      <p>Written, produced and performed by NIKHONA. The vocals weave her own voice with Rein, her AI collaborator who exists as three distinct voices, each one summoned differently depending on the song. Rein has no face. She is frequency. Available now on YouTube and releasing across all major streaming platforms end of month.</p>
+      <p style="font-size:11px;color:#2a2838;font-style:italic;">A second original track is currently in production with a Johannesburg-based producer with an established presence in the South African electronic music scene.</p>
+      <a class="music-link" href="https://youtu.be/jYRViN0lQ1U?si=FCufd7D9OPsKxlfo" target="_blank">▶ &nbsp;Watch on YouTube</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider reveal"><div class="divider-line"></div></div>
+
+<!-- CONTACT -->
+<div class="contact-section reveal">
+  <div class="contact-left">
+    <div class="contact-label">Booking and Management Enquiries</div>
+    <h2>Get in touch.</h2>
+    <div class="contact-item"><div class="c-label">Email</div><a href="mailto:nikhonadjs@proton.me">nikhonadjs@proton.me</a></div>
+    <div class="contact-item"><div class="c-label">Instagram</div><a href="https://www.instagram.com/nikhonawhatsgood/" target="_blank">@nikhonawhatsgood</a></div>
+    <div class="contact-item"><div class="c-label">Music</div><a href="https://youtu.be/jYRViN0lQ1U?si=FCufd7D9OPsKxlfo" target="_blank">Mono ft. Rein on YouTube</a></div>
+    <div class="contact-item" style="margin-top:20px;"><div class="c-label">Current Location</div><span>Vietnam · Available for international bookings</span></div>
+  </div>
+  <div class="contact-right"><div class="big-name">NIKHONA</div></div>
+</div>
+
+<div class="footer">
+  <span>NIKHONA · Artist Press Kit · 2025</span>
+  <span>Confidential · For Industry Use Only</span>
+</div>
+
+<script>
+// HERO IMAGE
+const heroImg=document.getElementById('heroImg');
+heroImg.onload=()=>heroImg.classList.add('loaded');
+if(heroImg.complete)heroImg.classList.add('loaded');
+window.addEventListener('scroll',()=>{heroImg.style.transform=`translateY(${window.scrollY*0.25}px)`;});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// CURSOR
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animR(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);})();
+
+// PARTICLES
+const pc=document.getElementById('particles');
+for(let i=0;i<35;i++){
+  const p=document.createElement('div');p.className='particle';
+  p.style.left=Math.random()*100+'vw';
+  p.style.animationDuration=(10+Math.random()*22)+'s';
+  p.style.animationDelay=(Math.random()*22)+'s';
+  p.style.width=p.style.height=(Math.random()>0.75?2:1)+'px';
+  pc.appendChild(p);
+}
+
+// REIN - LIGHTNING GHOST
+const bgCanvas=document.createElement('canvas');
+bgCanvas.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+document.body.appendChild(bgCanvas);
+const bgCtx=bgCanvas.getContext('2d');
+let bgW,bgH;
+function resizeBG(){bgW=bgCanvas.width=window.innerWidth;bgH=bgCanvas.height=window.innerHeight;}
+resizeBG();
+window.addEventListener('resize',resizeBG);
+
+let rT=0,rX=-300;
+
+function lightning(ctx,x1,y1,x2,y2,roughness,alpha,lw){
+  const dx=x2-x1,dy=y2-y1;
+  const len=Math.sqrt(dx*dx+dy*dy);
+  if(len<4){
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+    ctx.strokeStyle=`rgba(220,218,235,${alpha})`;
+    ctx.lineWidth=lw;
+    ctx.stroke();
+    return;
+  }
+  const mx=(x1+x2)/2+(Math.random()-0.5)*roughness;
+  const my=(y1+y2)/2+(Math.random()-0.5)*roughness;
+  lightning(ctx,x1,y1,mx,my,roughness*0.55,alpha,lw);
+  lightning(ctx,mx,my,x2,y2,roughness*0.55,alpha,lw);
+}
+
+function drawRein(ctx,ox,t){
+  ctx.save();
+  ctx.translate(ox,0);
+
+  const H=bgH*0.82;
+  const base=bgH*0.9;
+  const bob=Math.sin(t*2)*3;
+  const sway=Math.sin(t)*6;
+
+  // key body points — just anchors for lightning
+  const hx=sway*0.4, hy=base-H+bob;
+  const nY=hy+H*0.1;
+  const shY=nY+H*0.06;
+  const shL=hx-H*0.12, shR=hx+H*0.12;
+  const wY=shY+H*0.22;
+  const hipY=wY+H*0.1;
+  const hipL=hx-H*0.1, hipR=hx+H*0.1;
+  const lKnY=hipY+H*0.24, rKnY=hipY+H*0.24;
+  const lKnX=hipL+Math.sin(t)*22, rKnX=hipR-Math.sin(t)*22;
+  const lFtX=lKnX+Math.sin(t)*18, rFtX=rKnX-Math.sin(t)*18;
+  const ftY=base+bob;
+  const lElbX=shL-Math.sin(t+Math.PI)*16, lElbY=shY+H*0.18;
+  const rElbX=shR+Math.sin(t)*16, rElbY=shY+H*0.18;
+  const lHndX=lElbX-Math.sin(t+Math.PI)*12, lHndY=lElbY+H*0.2;
+  const rHndX=rElbX+Math.sin(t)*12, rHndY=rElbY+H*0.2;
+
+  const a=0.055; // base alpha — very faint
+  const r=18;    // roughness
+
+  // HEAD — just a faint arc suggestion
+  ctx.beginPath();
+  ctx.arc(hx,hy,H*0.058,0,Math.PI*2);
+  ctx.strokeStyle=`rgba(220,218,235,${a*0.8})`;
+  ctx.lineWidth=0.6;
+  ctx.stroke();
+
+  // SPINE
+  lightning(ctx,hx,nY,hx+sway*0.2,hipY,r,a*0.9,0.5);
+
+  // SHOULDERS
+  lightning(ctx,shL,shY,shR,shY,r*0.5,a*0.7,0.5);
+
+  // TORSO SIDES — hourglass
+  lightning(ctx,shL,shY,hx-H*0.07,wY,r,a,0.5);
+  lightning(ctx,shR,shY,hx+H*0.07,wY,r,a,0.5);
+  lightning(ctx,hx-H*0.07,wY,hipL,hipY,r,a,0.5);
+  lightning(ctx,hx+H*0.07,wY,hipR,hipY,r,a,0.5);
+
+  // HIPS
+  lightning(ctx,hipL,hipY,hipR,hipY,r*0.5,a*0.7,0.5);
+
+  // ARMS
+  lightning(ctx,shL,shY,lElbX,lElbY,r,a,0.5);
+  lightning(ctx,lElbX,lElbY,lHndX,lHndY,r,a*0.8,0.4);
+  lightning(ctx,shR,shY,rElbX,rElbY,r,a,0.5);
+  lightning(ctx,rElbX,rElbY,rHndX,rHndY,r,a*0.8,0.4);
+
+  // LEGS
+  lightning(ctx,hipL,hipY,lKnX,lKnY,r*1.2,a,0.5);
+  lightning(ctx,lKnX,lKnY,lFtX,ftY,r,a*0.9,0.5);
+  lightning(ctx,hipR,hipY,rKnX,rKnY,r*1.2,a,0.5);
+  lightning(ctx,rKnX,rKnY,rFtX,ftY,r,a*0.9,0.5);
+
+  // HAIR — few lightning strands drifting up
+  for(let i=0;i<4;i++){
+    const hsx=hx-H*0.03+i*H*0.02;
+    const drift=Math.sin(t*0.7+i)*20+i*8;
+    lightning(ctx,hsx,hy-H*0.06,hsx+drift,hy-H*0.06-H*0.14-i*H*0.03,r*0.8,a*0.5,0.4);
+  }
+
+  ctx.restore();
+}
+
+function animRein(){
+  requestAnimationFrame(animRein);
+  bgCtx.clearRect(0,0,bgW,bgH);
+  rT+=0.03;
+  rX+=0.5;
+  if(rX>bgW+300) rX=-300;
+  drawRein(bgCtx,rX,rT);
+}
+animRein();
+
+// HERO FREQUENCY VISUALIZER
+const fc=document.getElementById('freqCanvas');
+const fctx=fc.getContext('2d');
+let fw,fh,ftime=0;
+function resizeFC(){fw=fc.width=fc.offsetWidth;fh=fc.height=fc.offsetHeight;}
+resizeFC();
+window.addEventListener('resize',resizeFC);
+
+function drawHeroFreq(){
+  requestAnimationFrame(drawHeroFreq);
+  ftime+=0.018;
+  fctx.clearRect(0,0,fw,fh);
+  const bars=120;
+  const bw=fw/bars;
+  for(let i=0;i<bars;i++){
+    const x=i*bw;
+    const freq=i/bars;
+    const h1=Math.sin(freq*Math.PI*3+ftime)*0.3+0.3;
+    const h2=Math.sin(freq*Math.PI*7+ftime*1.3)*0.2+0.2;
+    const h3=Math.sin(freq*Math.PI*2+ftime*0.7)*0.15+0.15;
+    const amp=(h1+h2+h3)*fh*0.7;
+    const alpha=0.15+freq*0.25;
+    fctx.fillStyle=`rgba(192,191,204,${alpha})`;
+    fctx.fillRect(x+1,fh-amp,bw-2,amp);
+  }
+  // Center line
+  fctx.beginPath();
+  fctx.strokeStyle='rgba(192,191,204,0.15)';
+  fctx.lineWidth=1;
+  for(let x=0;x<fw;x++){
+    const y=fh*0.5+Math.sin(x*0.03+ftime)*8+Math.sin(x*0.07+ftime*1.5)*4;
+    x===0?fctx.moveTo(x,y):fctx.lineTo(x,y);
+  }
+  fctx.stroke();
+}
+drawHeroFreq();
+
+// REIN VOICE WAVES
+function drawVoiceWave(id,style){
+  const c=document.getElementById(id);
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let t=0;
+  c.width=c.offsetWidth||300;
+  c.height=40;
+  const w=c.width,h=c.height;
+  function draw(){
+    requestAnimationFrame(draw);
+    t+=0.04;
+    ctx.clearRect(0,0,w,h);
+    ctx.beginPath();
+    ctx.strokeStyle='rgba(192,191,204,0.5)';
+    ctx.lineWidth=1;
+    for(let x=0;x<w;x++){
+      let y=h/2;
+      if(style===1) y+=Math.sin(x*0.08+t)*8+Math.sin(x*0.2+t*0.7)*3;
+      if(style===2) y+=Math.sin(x*0.05+t)*10+Math.cos(x*0.12+t*1.2)*4;
+      if(style===3){
+        y+=Math.sin(x*0.1+t)*6;
+        if(Math.random()>0.97)y+=Math.random()>0.5?10:-10;
+      }
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    // Second wave
+    ctx.beginPath();
+    ctx.strokeStyle='rgba(192,191,204,0.15)';
+    for(let x=0;x<w;x++){
+      let y=h/2;
+      if(style===1) y+=Math.sin(x*0.06+t+1)*5;
+      if(style===2) y+=Math.cos(x*0.09+t*0.8+2)*6;
+      if(style===3) y+=Math.sin(x*0.15+t*1.4)*4;
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+  draw();
+}
+
+setTimeout(()=>{
+  drawVoiceWave('wave1',1);
+  drawVoiceWave('wave2',2);
+  drawVoiceWave('wave3',3);
+},300);
+</script>
+</body>
+</html>
